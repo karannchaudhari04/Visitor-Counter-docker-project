@@ -13,7 +13,7 @@ services:
 
 
   redis:
-    image: redis:6.0.7
+    image: "redis:alpine"
     container_name: redis
     restart: always
     volumes:
