@@ -50,7 +50,7 @@ This will build the Docker image and start the application container and the Red
 
 ## Usage
 
-Once the containers are running, you can access the web application by opening your web browser and navigating to `http://localhost:5000`.
+Once the containers are running, you can access the web application by opening your web browser and navigating to `http://localhost:8000`.
 
 You should see the Visitor Counter page, displaying the current visit count. Click the "Refresh Count" button to update the visit count.
 
