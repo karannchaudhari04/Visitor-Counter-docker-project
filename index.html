@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Counter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .count {
+            font-size: 3rem;
+            margin: 10px 0;
+            color: #ffeb3b;
+        }
+        .count-info {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #ffeb3b;
+        }
+        #visit-button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .visit-button:hover {
+            background-color: #388e3c;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Visitor Counter</h1>
+        <p class="count-info">This page has been visited:</p>
+        <div class="count" id="visitCount">0</div>
+        <button id="visit-button" onclick="updateVisitCount()">Refresh Count</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+  const visitCountElement = document.getElementById('visitCount');
+  const refreshButton = document.getElementById('visit-button');
+
+  function updateVisitCount() {
+    fetch('/api/visits')
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          visitCountElement.textContent = data.error;
+        } else {
+          visitCountElement.textContent = data.count;
+        }
+      })
+      .catch(error => {
+        visitCountElement.textContent = `Error: ${error}`;
+      });
+  }
+
+  updateVisitCount();
+
+  refreshButton.addEventListener('click', updateVisitCount);
+});
+    </script>
+</body>
+</html>
