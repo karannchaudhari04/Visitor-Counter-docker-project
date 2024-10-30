@@ -14,6 +14,13 @@ cache = redis.Redis(host=redis_host, port=redis_port)
 def serve_frontend():
     return send_from_directory('frontend', 'index.html')
 
+# Check Redis connection on startup
+try:
+    cache.ping()
+    print("Connected to Redis!")
+except redis.ConnectionError:
+    print("Failed to connect to Redis!")
+
 # API endpoint for visit count
 @app.route('/api/visits')
 def get_visit_count():
@@ -24,4 +31,5 @@ def get_visit_count():
         return {'error': str(e)}, 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
